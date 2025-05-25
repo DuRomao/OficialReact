@@ -5,7 +5,6 @@ import CustomizerContext from "../../../../_helper/Customizer";
 import CommenUL from "./CommenUL";
 import { SidebarTipo } from "../../../../Constant";
 
-
 const SidebarType = () => {
   const { addSidebarLayouts } = useContext(CustomizerContext);
   const sidebarType =

@@ -5,7 +5,8 @@ import { Configuration,TempoReal } from "../../Constant";
 import CheckLayout from "./Tabs/CheckLayout";
 import SidebarCusmizer from "./Tabs/Sidebar";
 
-const TabCustomizer = () => {
+const TabCustomizer = ({ selected, callbackNavTab }) => {
+    
     return (
         <Fragment>
             <TabContent activeTab={selected}>
