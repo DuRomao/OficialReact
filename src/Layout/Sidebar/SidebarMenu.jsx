@@ -67,6 +67,7 @@ const SidebarMenu = ({
             sidebartoogle={sidebartoogle}
             setNavActive={setNavActive}
             activeClass={activeClass}
+            menuItems={props.mainmenu || []}
           />
         </ul>
       </div>

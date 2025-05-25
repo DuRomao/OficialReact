@@ -10,6 +10,7 @@ const SidebarMenuItems = ({
   sidebartoogle,
   setNavActive,
   activeClass,
+  menuItems = [],
 }) => {
   const { layout } = useContext(CustomizerContext);
   const layout1 = localStorage.getItem("sidebar_layout") || layout;
@@ -33,7 +34,7 @@ const SidebarMenuItems = ({
       }
     }
     if (!item.active) {
-      MENUITEMS.map((a) => {
+      menuItems.map((a) => {
         a.Items.filter((Items) => {
           if (a.Items.includes(item)) Items.active = false;
           if (!Items.children) return false;
@@ -54,12 +55,12 @@ const SidebarMenuItems = ({
       });
     }
     item.active = !item.active;
-    setMainMenu({ mainmenu: MENUITEMS });
+    setMainMenu([...menuItems]);
   };
 
   return (
     <>
-      {MENUITEMS.map((Item, i) => (
+      {menuItems.map((Item, i) => (
         <Fragment key={i}>
           <li className="sidebar-main-title">
             <div>

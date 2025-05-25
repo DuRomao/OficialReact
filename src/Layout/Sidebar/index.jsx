@@ -13,7 +13,7 @@ const Sidebar = (props) => {
 
   const layout = id ? id : defaultLayout;
   // eslint-disable-next-line
-  const [mainmenu, setMainMenu] = useState(MENUITEMS);
+  const [mainmenu, setMainMenu] = useState([]);
 
   const [width, setWidth] = useState(0);
 
@@ -37,8 +37,16 @@ const Sidebar = (props) => {
     document.querySelector(".left-arrow").classList.add("d-none");
     window.addEventListener("resize", handleResize);
     handleResize();
-    const currentUrl = window.location.pathname;
-    MENUITEMS.map((items) => {
+    
+    // Carregar menu da API
+    const loadMenu = async () => {
+      try {
+        const menuData = await MENUITEMS();
+        setMainMenu(menuData);
+        
+        // Configurar item ativo após carregar o menu
+        const currentUrl = window.location.pathname;
+        menuData.map((items) => {
       items.Items.filter((Items) => {
         if (Items.path === currentUrl) setNavActive(Items);
         if (!Items.children) return false;
@@ -58,7 +66,14 @@ const Sidebar = (props) => {
         return Items;
       });
       return items;
-    });
+        });
+      } catch (error) {
+        console.error("Erro ao carregar menu:", error);
+      }
+    };
+    
+    loadMenu();
+    
     window.addEventListener("scroll", handleScroll);
     handleScroll();
     return () => {
@@ -77,7 +92,7 @@ const Sidebar = (props) => {
   };
 
   const setNavActive = (item) => {
-    MENUITEMS.map((menuItems) => {
+    mainmenu.map((menuItems) => {
       menuItems.Items.filter((Items) => {
         if (Items !== item) {
           Items.active = false;
@@ -103,7 +118,7 @@ const Sidebar = (props) => {
       return menuItems;
     });
     item.active = !item.active;
-    setMainMenu({ mainmenu: MENUITEMS });
+    setMainMenu([...mainmenu]);
   };
 
   const closeOverlay = () => {
@@ -128,7 +143,7 @@ const Sidebar = (props) => {
         {/* sidebartoogle={sidebartoogle} */}
         <SidebarMenu
           setMainMenu={setMainMenu}
-          props={props}
+          props={{...props, mainmenu}}
           setNavActive={setNavActive}
           activeClass={activeClass}
           width={width}
