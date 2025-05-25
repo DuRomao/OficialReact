@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
@@ -6,46 +7,104 @@ import { authRoutes } from "./AuthRoutes";
 import LayoutRoutes from "../Route/LayoutRoutes";
 import Signin from "../Auth/Signin";
 import PrivateRoute from "./PrivateRoute";
+import ErrorPage500 from "../Components/Pages/ErrorPages/ErrorPage500";
 import { classes } from "../Data/Layouts";
 
-// setup fake backend
-
 const Routers = () => {
-  const login = useState(JSON.parse(localStorage.getItem("login")))[0];
   const [authenticated, setAuthenticated] = useState(false);
-  const defaultLayoutObj = classes.find((item) => Object.values(item).pop(1) === "compact-wrapper");
+  const [isLoading, setIsLoading] = useState(true);
+  
+  const defaultLayoutObj = classes.find(
+    (item) => Object.values(item).pop(1) === "compact-wrapper",
+  );
   const layout = localStorage.getItem("layout") || Object.keys(defaultLayoutObj).pop();
 
   useEffect(() => {
     let abortController = new AbortController();
-    setAuthenticated(JSON.parse(localStorage.getItem("authenticated")));
+    
+    // Verificar autenticação inicial
+    const checkInitialAuth = () => {
+      const token = localStorage.getItem("authToken");
+      const authStatus = localStorage.getItem("authenticated");
+      
+      if (token && authStatus === "true") {
+        setAuthenticated(true);
+      } else {
+        setAuthenticated(false);
+        // Limpar dados inconsistentes
+        localStorage.removeItem("authenticated");
+        localStorage.removeItem("authToken");
+        localStorage.removeItem("login");
+      }
+      
+      setIsLoading(false);
+    };
+
+    checkInitialAuth();
+    
     console.ignoredYellowBox = ["Warning: Each", "Warning: Failed"];
     console.disableYellowBox = true;
+    
     return () => {
       abortController.abort();
     };
   }, []);
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <BrowserRouter basename={"/"}>
       <Suspense fallback={<Loader />}>
         <Routes>
-          <Route path={"/"} element={<PrivateRoute />}>
-            {login || authenticated ? (
-              <>
-                <Route exact path={`${process.env.PUBLIC_URL}`} element={<Navigate to={`${process.env.PUBLIC_URL}/dashboard/default/${layout}`} />} />
-                <Route exact path={`/`} element={<Navigate to={`${process.env.PUBLIC_URL}/dashboard/default/${layout}`} />} />
-              </>
-            ) : (
-              ""
-            )}
-            <Route path={`/*`} element={<LayoutRoutes />} />
-          </Route>
-
-          <Route exact path={`${process.env.PUBLIC_URL}/login`} element={<Signin />} />
+          {/* Rota de login pública */}
+          <Route
+            path={`${process.env.PUBLIC_URL}/login`}
+            element={<Signin />}
+          />
+          
+          {/* Rotas de autenticação e erro (públicas) */}
           {authRoutes.map(({ path, Component }, i) => (
             <Route path={path} element={Component} key={i} />
           ))}
+
+          {/* Rotas protegidas */}
+          <Route path="/" element={<PrivateRoute />}>
+            {/* Redirecionamento da raiz para dashboard */}
+            <Route
+              path="/"
+              element={
+                <Navigate
+                  to={`${process.env.PUBLIC_URL}/dashboard/default/${layout}`}
+                  replace
+                />
+              }
+            />
+            <Route
+              path={`${process.env.PUBLIC_URL}`}
+              element={
+                <Navigate
+                  to={`${process.env.PUBLIC_URL}/dashboard/default/${layout}`}
+                  replace
+                />
+              }
+            />
+            
+            {/* Todas as rotas internas protegidas */}
+            <Route path="/*" element={<LayoutRoutes />} />
+          </Route>
+
+          {/* Rota catch-all para páginas não encontradas - redireciona para erro 500 */}
+          <Route
+            path="*"
+            element={
+              <Navigate
+                to={`${process.env.PUBLIC_URL}/pages/errors/error500/compact`}
+                replace
+              />
+            }
+          />
         </Routes>
       </Suspense>
     </BrowserRouter>

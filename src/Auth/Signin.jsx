@@ -1,3 +1,4 @@
+
 import React, { Fragment, useState, useEffect, useContext } from "react";
 import { Col, Container, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import { Btn, H4, P } from "../AbstractElements";
@@ -21,54 +22,106 @@ const Signin = ({ selected }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [togglePassword, setTogglePassword] = useState(false);
-  const navigate = useNavigate(); // Alterado de history para navigate (React Router v6)
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const { layoutURL } = useContext(CustomizerContext);
 
-  // Estado para armazenar informações do usuário (opcional, para exibir nome/imagem)
+  // Estado para armazenar informações do usuário
   const [value, setValue] = useState(localStorage.getItem("profileURL") || man);
   const [name, setName] = useState(localStorage.getItem("Name") || "");
 
-  // Configurar imagem e nome padrão no localStorage
+  // Verificar se já está autenticado
   useEffect(() => {
-    localStorage.setItem("profileURL", man);
-    localStorage.setItem("Name", "Emay Walter");
-  }, [value, name]);
+    const token = localStorage.getItem("authToken");
+    const authenticated = localStorage.getItem("authenticated");
+    
+    if (token && authenticated === "true") {
+      // Se já está logado, redirecionar para dashboard
+      navigate(`${process.env.PUBLIC_URL}/dashboard/default/${layoutURL}`);
+    }
+
+    // Configurar valores padrão
+    if (!localStorage.getItem("profileURL")) {
+      localStorage.setItem("profileURL", man);
+    }
+    if (!localStorage.getItem("Name")) {
+      localStorage.setItem("Name", "Emay Walter");
+    }
+  }, [navigate, layoutURL]);
 
   // Função de login
   const loginAuth = async (e) => {
     e.preventDefault();
+    
+    if (!email || !password) {
+      toast.error("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    setIsLoading(true);
+    
     try {
       // Enviar credenciais ao endpoint /login
       const response = await axios.post(
         `${API_URL}/api.php?index=login`,
         { email, password },
-        { withCredentials: true }, // Necessário para enviar/receber cookies
+        { 
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
       );
 
-       const { user } = response.data;
+      if (response.data.success && response.data.token) {
+        const { user, token } = response.data;
 
-      // Atualizar estado com informações do usuário
-      setName(user.name);
-      setValue(user.profileURL || man);
-      localStorage.setItem("Name", user.name);
-      localStorage.setItem("profileURL", user.profileURL || man);
-      localStorage.setItem("login", JSON.stringify(true)); // Manter compatibilidade com o código original
+        // Salvar token JWT
+        localStorage.setItem("authToken", token);
+        localStorage.setItem("authenticated", "true");
+        localStorage.setItem("login", "true");
 
-      // Exibir mensagem de sucesso
-      toast.success("Sucesso, usuário logado!");
-    
-      navigate(`${process.env.PUBLIC_URL}/dashboard/default/${layoutURL}`);
+        // Atualizar estado com informações do usuário
+        if (user) {
+          setName(user.name || "Usuário");
+          setValue(user.profileURL || man);
+          localStorage.setItem("Name", user.name || "Usuário");
+          localStorage.setItem("profileURL", user.profileURL || man);
+        }
+
+        // Configurar axios para usar o token em requisições futuras
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+        // Exibir mensagem de sucesso
+        toast.success("Login realizado com sucesso!");
+        
+        // Aguardar um momento antes de redirecionar
+        setTimeout(() => {
+          navigate(`${process.env.PUBLIC_URL}/dashboard/default/${layoutURL}`);
+        }, 1000);
+        
+      } else {
+        throw new Error(response.data.message || "Credenciais inválidas");
+      }
+      
     } catch (error) {
+      console.error('Erro no login:', error);
+      
+      // Limpar dados de autenticação em caso de erro
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("authenticated");
+      localStorage.removeItem("login");
+      
       if (error.response) {
-        console.error('Resposta do servidor:', error.response.data);
-        toast.error(error.response.data.error || 'Erro ao fazer login.');
+        const errorMessage = error.response.data.message || error.response.data.error || 'Erro ao fazer login.';
+        toast.error(errorMessage);
       } else if (error.request) {
-        console.error('Nenhuma resposta recebida:', error.request);
         toast.error('Erro de conexão com o servidor.');
       } else {
-        console.error('Erro na configuração:', error.message);
         toast.error('Erro inesperado: ' + error.message);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -79,7 +132,7 @@ const Signin = ({ selected }) => {
           <Col xs="12">
             <div className="login-card">
               <div className="login-main login-tab">
-                <Form className="theme-form">
+                <Form className="theme-form" onSubmit={loginAuth}>
                   <H4>{selected === "simpleLogin" ? "" : "Login"}</H4>
                   <P>{"Informe o email e o password para login"}</P>
                   <FormGroup>
@@ -89,6 +142,8 @@ const Signin = ({ selected }) => {
                       type="email"
                       onChange={(e) => setEmail(e.target.value)}
                       value={email}
+                      required
+                      disabled={isLoading}
                     />
                   </FormGroup>
                   <FormGroup className="position-relative">
@@ -99,6 +154,8 @@ const Signin = ({ selected }) => {
                         type={togglePassword ? "text" : "password"}
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
+                        required
+                        disabled={isLoading}
                       />
                       <div
                         className="show-hide"
@@ -110,7 +167,8 @@ const Signin = ({ selected }) => {
                   </FormGroup>
                   <div className="position-relative form-group mb-0">
                     <div className="checkbox">
-                      <Input id="checkbox1" type="checkbox" />
+                      <Input id="checkbox1" type="checkbox" disabled={isLoading} />
+                      <Label className="text-muted" for="checkbox1">{"Lembrar-me"}</Label>
                     </div>
                     <a className="link" href="#javascript">
                       {ForgotPassword}
@@ -119,10 +177,11 @@ const Signin = ({ selected }) => {
                       attrBtn={{
                         color: "primary",
                         className: "d-block w-100 mt-2",
-                        onClick: (e) => loginAuth(e),
+                        type: "submit",
+                        disabled: isLoading
                       }}
                     >
-                      {SignIn}
+                      {isLoading ? "Entrando..." : SignIn}
                     </Btn>
                   </div>
                 </Form>
@@ -131,7 +190,17 @@ const Signin = ({ selected }) => {
           </Col>
         </Row>
       </Container>
-      <ToastContainer />
+      <ToastContainer 
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Fragment>
   );
 };
