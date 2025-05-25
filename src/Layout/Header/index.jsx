@@ -50,39 +50,42 @@ const Header = () => {
     keyword ? addFix() : removeFix();
     const items = [];
 
-    mainmenu.map((menuItems) => {
-      menuItems.Items.filter((mItems) => {
-        if (
-          mItems.title.toLowerCase().includes(keyword) &&
-          mItems.type === "link"
-        ) {
-          items.push(mItems);
-        }
-        if (!mItems.children) return false;
-        mItems.children.filter((subItems) => {
+    // Verificar se mainmenu é um array antes de fazer map
+    if (Array.isArray(mainmenu)) {
+      mainmenu.map((menuItems) => {
+        menuItems.Items.filter((mItems) => {
           if (
-            subItems.title.toLowerCase().includes(keyword) &&
-            subItems.type === "link"
+            mItems.title.toLowerCase().includes(keyword) &&
+            mItems.type === "link"
           ) {
-            subItems.icon = mItems.icon;
-            items.push(subItems);
+            items.push(mItems);
           }
-          if (!subItems.children) return false;
-          subItems.children.filter((suSubItems) => {
-            if (suSubItems.title.toLowerCase().includes(keyword)) {
-              suSubItems.icon = mItems.icon;
-              items.push(suSubItems);
+          if (!mItems.children) return false;
+          mItems.children.filter((subItems) => {
+            if (
+              subItems.title.toLowerCase().includes(keyword) &&
+              subItems.type === "link"
+            ) {
+              subItems.icon = mItems.icon;
+              items.push(subItems);
             }
-            return suSubItems;
+            if (!subItems.children) return false;
+            subItems.children.filter((suSubItems) => {
+              if (suSubItems.title.toLowerCase().includes(keyword)) {
+                suSubItems.icon = mItems.icon;
+                items.push(suSubItems);
+              }
+              return suSubItems;
+            });
+            return subItems;
           });
-          return subItems;
+          checkSearchResultEmpty(items);
+          setsearchValue(items);
+          return mItems;
         });
-        checkSearchResultEmpty(items);
-        setsearchValue(items);
-        return mItems;
+        return menuItems;
       });
-      return menuItems;
-    });
+    }
   };
 
   const checkSearchResultEmpty = (items) => {

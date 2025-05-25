@@ -8,7 +8,7 @@ import { Btn } from "../../../AbstractElements";
 
 const BookmarkHeader = () => {
   // eslint-disable-next-line
-  const [mainmenu, setMainMenu] = useState(MENUITEMS);
+  const [mainmenu, setMainMenu] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [searchResult, setSearchResult] = useState(false);
   const [bookmarkSearch, SetBookmarkSearch] = useState(false);
