@@ -1,4 +1,20 @@
-export const MENUITEMS = [
+import axios from 'axios';
+
+export const getMenuItems = async () => {
+  try {
+    const response = await axios.get('https://www.meulaudo.app/API/api.php?index=menu', {
+      headers: {
+        'Authorization': 'Bearer YOUR_TOKEN_HERE'
+      }
+    });
+    return response.data.menu;
+  } catch (error) {
+    console.error('Error fetching menu:', error);
+    return defaultMenuItems;
+  }
+};
+
+const defaultMenuItems = [
   {
     menutitle: "General",
     menucontent: "Dashboards,Widgets",
@@ -1005,3 +1021,5 @@ export const MENUITEMS = [
     ],
   },
 ];
+
+export const MENUITEMS = defaultMenuItems;
