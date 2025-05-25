@@ -1,17 +1,16 @@
-
 import React from "react";
 import { Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import Loader from "../Layout/Loader";
 import { authRoutes } from "./AuthRoutes";
+import { classes } from "../Data/Layouts";
+import Loader from "../Layout/Loader";
 import LayoutRoutes from "../Route/LayoutRoutes";
 import Signin from "../Auth/Signin";
 import PrivateRoute from "./PrivateRoute";
-import ErrorPage500 from "../Components/Pages/ErrorPages/ErrorPage500";
-import { classes } from "../Data/Layouts";
+import LogoutSistema from "../Auth/Logout";
 
 const Routers = () => {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false); // <-- CORRETO
   const [isLoading, setIsLoading] = useState(true);
   
   const defaultLayoutObj = classes.find(
@@ -21,30 +20,26 @@ const Routers = () => {
 
   useEffect(() => {
     let abortController = new AbortController();
-    
+
     // Verificar autenticação inicial
     const checkInitialAuth = () => {
-      const token = localStorage.getItem("authToken");
-      const authStatus = localStorage.getItem("authenticated");
-      
+      const token = localStorage.getItem("Token");
+      const authStatus = localStorage.getItem("Authenticated");
+
       if (token && authStatus === "true") {
         setAuthenticated(true);
       } else {
-        setAuthenticated(false);
-        // Limpar dados inconsistentes
-        localStorage.removeItem("authenticated");
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("login");
-      }
-      
+        LogoutSistema();
+      };
+
       setIsLoading(false);
     };
 
     checkInitialAuth();
-    
+
     console.ignoredYellowBox = ["Warning: Each", "Warning: Failed"];
     console.disableYellowBox = true;
-    
+
     return () => {
       abortController.abort();
     };
@@ -63,7 +58,7 @@ const Routers = () => {
             path={`${process.env.PUBLIC_URL}/login`}
             element={<Signin />}
           />
-          
+
           {/* Rotas de autenticação e erro (públicas) */}
           {authRoutes.map(({ path, Component }, i) => (
             <Route path={path} element={Component} key={i} />
@@ -90,7 +85,7 @@ const Routers = () => {
                 />
               }
             />
-            
+
             {/* Todas as rotas internas protegidas */}
             <Route path="/*" element={<LayoutRoutes />} />
           </Route>

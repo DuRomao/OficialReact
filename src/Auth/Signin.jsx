@@ -90,11 +90,6 @@ const Signin = ({ selected }) => {
       }
     } catch (error) {
       console.error("Erro no login:", error);
-      // Limpar dados de autenticação em caso de erro
-      localStorage.removeItem("Token");
-      localStorage.removeItem("UserFoto");
-      localStorage.removeItem("UserName");
-      localStorage.setItem("Authenticated", "false");
       
       if (error.response) {
         toast.error(
@@ -106,7 +101,9 @@ const Signin = ({ selected }) => {
         toast.error("Erro de conexão com o servidor.");
       } else {
         toast.error("Erro inesperado: " + error.message);
-      }
+      };
+      LogoutSistema();
+      navigate(`${process.env.PUBLIC_URL}/login`);
     } finally {
       setIsLoading(false);
     }

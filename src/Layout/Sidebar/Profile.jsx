@@ -5,15 +5,14 @@ import { H6, Image, LI, UL, P } from "../../AbstractElements";
 import man from "../../assets/images/dashboard/1.png";
 
 const Profile = () => {
-  const authenticated = JSON.parse(localStorage.getItem("authenticated"));
-  const auth0_profile = JSON.parse(localStorage.getItem("auth0_profile"));
-  const [profile, setProfile] = useState("");
-  const [name, setName] = useState("");
+  const authenticated = JSON.parse(localStorage.getItem("Authenticated"));
+  const [UserFoto, setUserFoto] = useState("");
+  const [UserName, setUserName] = useState("");
 
   useEffect(() => {
-    setProfile(localStorage.getItem("profileURL") || man);
-    setName(localStorage.getItem("Name"));
-  }, [setProfile, setName]);
+    setUserFoto(localStorage.getItem("UserFoto") || man);
+    setUserName(localStorage.getItem("UserName"));
+  }, [setUserFoto, setUserName]);
 
   return (
     <Fragment>
@@ -25,12 +24,12 @@ const Profile = () => {
           <Image
             attrImage={{
               className: "img-90 rounded-circle",
-              src: authenticated ? auth0_profile.picture : profile,
+              src: authenticated ? authenticated.UserFoto : UserFoto,
               alt: "",
             }}
           />
           <H6 attrH6={{ className: "mt-3 f-14 f-w-600" }}>
-            {authenticated ? auth0_profile.name : name}
+            {authenticated ? authenticated.UserName : UserName}
           </H6>
         </Link>
         {/* <P attrPara={{ className: 'mb-0 font-roboto' }} >Human Resources Department</P> */}

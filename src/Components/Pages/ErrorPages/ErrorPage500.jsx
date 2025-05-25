@@ -6,24 +6,18 @@ import { Container, Button, Media, Col } from "reactstrap";
 import { BACK_TO_HOME_PAGE, MENSAGEM_ERROR_400 } from "../../../Constant";
 import CustomizerContext from "../../../_helper/Customizer";
 import { P, H2 } from "../../../AbstractElements";
+import LogoutSistema from "../../../Auth/Logout";
 
 const Error500 = () => {
     const { layoutURL } = useContext(CustomizerContext);
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        // Limpar dados de autenticação
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("authenticated");
-        localStorage.removeItem("login");
-        localStorage.removeItem("Name");
-        localStorage.removeItem("profileURL");
-        
-        // Redirecionar para login
+        LogoutSistema();
         navigate(`${process.env.PUBLIC_URL}/login`);
     };
 
-    const isAuthenticated = localStorage.getItem("authenticated") === "true";
+    const isAuthenticated = localStorage.getItem("Authenticated") === "true";
 
     return (
         <Fragment>
@@ -38,7 +32,7 @@ const Error500 = () => {
                         </div>
                         <Col md="8 offset-md-2">
                             <P attrPara={{ className: "sub-content" }}>
-                                {"Ops! Algo deu errado. A página que você está procurando não foi encontrada ou ocorreu um erro interno."}
+                                {MENSAGEM_ERROR_400}
                             </P>
                         </Col>
                         <div className="d-flex justify-content-center gap-3 flex-wrap">

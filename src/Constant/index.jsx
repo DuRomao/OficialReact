@@ -1,7 +1,8 @@
 export const API_URL = "https://www.meulaudo.app/API";
-export const RempoReal = "altere em tempo real";
+export const TempoReal = "altere em tempo real";
 
 export const Dashboard = "Painel";
+export const MensagemTextoManutencao = "Site em Manutenção, volte em breve <BR> , obrigado pela paciência";
 export const SidebarTipo = "Menu123";
 export const Widgets = "Widgets";
 export const Summary = "Resumo";
@@ -1415,6 +1416,7 @@ export const EnterOTP = "Digite o OTP";
 export const Resend = "Reenviar";
 export const MAINTENANCE = "MANUTENÇÃO";
 export const BACK_TO_HOME_PAGE = "VOLTAR PARA A PÁGINA INICIAL";
+export const MENSAGEM_ERROR_400 = "A página que você está tentando acessar não está disponível no momento. Isso pode ter ocorrido porque a página não existe ou foi movida.";
 export const WE_ARE_COMING_SOON = "ESTAMOS CHEGANDO EM BREVE";
 
 export const SampleCard = "Cartão de Amostra";

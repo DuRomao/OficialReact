@@ -4,7 +4,7 @@ import { Deutsch, English, Español, Français, Português, 简体中文 } from 
 
 const Language = () => {
   const [langdropdown, setLangdropdown] = useState(false);
-  const [selected, setSelected] = useState('en');
+  const [selected, setSelected] = useState('br');
   const { i18n } = useTranslation();
 
   const changeLanguage = (lng) => {
@@ -48,8 +48,8 @@ const Language = () => {
             <i className='flag-icon flag-icon-fr'></i>
             <span className='lang-txt'>{Français}</span>
           </div>
-          <div className='lang' onClick={() => changeLanguage('pt')}>
-            <i className='flag-icon flag-icon-pt'></i>
+          <div className='lang' onClick={() => changeLanguage('br')}>
+            <i className='flag-icon flag-icon-br'></i>
             <span className='lang-txt'>
               {Português}
               <span> {'(BR)'}</span>

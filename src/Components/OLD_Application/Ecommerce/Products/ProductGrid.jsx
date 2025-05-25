@@ -5,8 +5,7 @@ import FilterContext from "../../../../_helper/Ecommerce/Filter";
 import { getVisibleproducts } from "../../../../Services/Ecommerce.service";
 import ProductModal from "./ProductModal";
 import React, { Fragment, useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router";
+import { Link ,useNavigate } from "react-router-dom";
 import { Row, Card, Button } from "reactstrap";
 import CustomizerContext from "../../../../_helper/Customizer";
 

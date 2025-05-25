@@ -2,7 +2,7 @@ import ProductContext from '../../../../_helper/Ecommerce/Product';
 import { Price, MoveToCarts } from '../../../../Constant';
 import CartContext from '../../../../_helper/Ecommerce/Cart';
 import { Btn, H6, Image } from '../../../../AbstractElements';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import { Col, Media } from 'reactstrap';
 import React, { Fragment, useContext } from 'react';
 import CustomizerContext from '../../../../_helper/Customizer';
