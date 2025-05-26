@@ -24,7 +24,7 @@ import AnimationThemeProvider from './_helper/AnimationTheme/AnimationThemeProvi
 import CustomizerProvider from './_helper/Customizer/CustomizerProvider';
 import "./App.css";
 import "./i18n";
-import "./_helper/TokenManager";
+import "../_helper/TokenManager";
 
 const App = () => (
   <div className='App'>
