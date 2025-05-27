@@ -16,7 +16,7 @@ const ComingsoonVideo = (props) => {
               <source src={authVideo} type='video/mp4' />
             </video>
             <div className='comingsoon-inner text-center'>
-              <Image attrImage={{ src: `${require('../../../assets/images/logo/logo.png')}`, alt: '' }} />
+              <Image attrImage={{ src: `${require('../../../assets/img/logo/RGL1_FB.png')}`, alt: '' }} />
               <H5>{WE_ARE_COMING_SOON}</H5>
               <div className='countdown' id='clockdiv'>
                 <CountdownComponent />

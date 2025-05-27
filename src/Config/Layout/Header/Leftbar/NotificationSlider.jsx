@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { H6, Image } from '../../../AbstractElements';
-import fireImage from '../../../assets/images/giftools.gif';
+import { H6, Image } from '../../../../AbstractElements';
+import fireImage from '../../../../assets/images/giftools.gif';
 import Slider from 'react-slick';
 import { notificationSliderOption } from './NotificationSliderOption';
 

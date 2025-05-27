@@ -3,8 +3,8 @@ import { Facebook, Linkedin, Twitter } from 'react-feather';
 import { Form, FormGroup, Input, Label, Row, Col } from 'reactstrap';
 import { Btn, H4, P, H6, Image } from '../../../AbstractElements';
 import { Link } from 'react-router-dom';
-import logoWhite from '../../../assets/images/logo/logo.png';
-import logoDark from '../../../assets/images/logo/logo_dark.png';
+import logoWhite from '../../../assets/img/logo/RGL1_FB.png';
+import logoDark from '../../../assets/img/logo/RGL1_FB_Dark.png';
 
 const RegisterFrom = ({ logoClassMain }) => {
   const [togglePassword, setTogglePassword] = useState(false);

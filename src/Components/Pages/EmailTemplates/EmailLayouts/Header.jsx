@@ -9,7 +9,7 @@ const Header = () => {
                 <tbody>
                     <tr className="header">
                         <td align="left" valign="top">
-                            <Image attrImage={{ className: "main-logo", src: `${require("../../../../assets/images/logo/logo.png")}` }} /></td>
+                            <Image attrImage={{ className: "main-logo", src: `${require("../../../../assets/img/logo/RGL1_FB.png")}` }} /></td>
                         <td className="menu" align="right">
                             <UL attrUL={{ className: 'flex-row' }}>
                                 {menulist.map(element =>

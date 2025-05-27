@@ -4,7 +4,6 @@ import { AlignCenter } from "react-feather";
 import { Link } from "react-router-dom";
 import { Image } from "../../../../AbstractElements";
 import CustomizerContext from "../../../../_helper/Customizer";
-//import NotificationSlider from "./NotificationSlider";
 
 const Leftbar = () => {
   const { layoutURL, setToggleIcon, toggleSidebar } =
@@ -57,15 +56,23 @@ const Leftbar = () => {
             <Image
               attrImage={{
                 className: "img-fluid for-light",
-                src: `${require("../../../../assets/images/logo/logo.png")}`,
-                alt: "",
+                src: `${require("../../../../assets/img/logo/RGL1_FB.png")}`,
+                alt: "RGL Safety",
+                style: {
+                  height: "35px",
+                  backgroundColor: "transparent",
+                },
               }}
             />
             <Image
               attrImage={{
                 className: "img-fluid for-dark",
-                src: `${require("../../../../assets/images/logo/logo_dark.png")}`,
-                alt: "",
+                src: `${require("../../../../assets/img/logo/RGL1_FB.png")}`,
+                alt: "RGL Safety",
+                style: {
+                  height: "35px",
+                  backgroundColor: "transparent",
+                },
               }}
             />
           </Link>
@@ -85,9 +92,14 @@ const Leftbar = () => {
           />
         </div>
       </Col>
-      <Col xxl="5" xl="6" lg="5" md="4" sm="3" className="left-header p-0">
-        
-      </Col>
+      <Col
+        xxl="5"
+        xl="6"
+        lg="5"
+        md="4"
+        sm="3"
+        className="left-header p-0"
+      ></Col>
     </Fragment>
   );
 };

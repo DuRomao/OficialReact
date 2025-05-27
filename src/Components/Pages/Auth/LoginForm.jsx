@@ -4,8 +4,8 @@ import { Form, FormGroup, Input, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Facebook, Linkedin, Twitter } from 'react-feather';
 
-import logoWhite from '../../../assets/images/logo/logo.png';
-import logoDark from '../../../assets/images/logo/logo_dark.png';
+import logoWhite from '../../../assets/img/logo/RGL1_FB.png';
+import logoDark from '../../../assets/img/logo/RGL1_FB_Dark.png';
 
 const LoginForm = ({ logoClassMain }) => {
   const [togglePassword, setTogglePassword] = useState(false);

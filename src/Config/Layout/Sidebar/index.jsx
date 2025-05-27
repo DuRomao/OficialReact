@@ -1,155 +1,200 @@
-import React, { Fragment, useState, useEffect, useContext } from "react";
-import CustomContext from "../../../_helper/Customizer";
+import React, { useContext, useEffect, useState } from "react";
 import { MENUITEMS } from "./Menu";
-import SidebarIcon from "./SidebarIcon";
-import SidebarLogo from "./SidebarLogo";
-import SidebarMenu from "./SidebarMenu";
+import SidebarMenuItems from "./SidebarMenuItems";
+import RGLIcon from "../../../assets/img/logo/RGL1_FB.png";
+import CustomizerContext from "../../../_helper/Customizer";
 
-const Sidebar = (props) => {
-  const customizer = useContext(CustomContext);
-  const { toggleIcon } = useContext(CustomContext);
-  const id = window.location.pathname.split("/").pop();
-  const defaultLayout = Object.keys(customizer.layout);
-
-  const layout = id ? id : defaultLayout;
-  const [mainmenu, setMainMenu] = useState([]);
-
-  const [width, setWidth] = useState(0);
-
-  const handleScroll = () => {
-    if (window.scrollY > 400) {
-      
-      // if (
-      //   customizer.settings.sidebar.type.split(' ').pop() ===
-      //   'material-type' ||
-      //   customizer.settings.sidebar.type.split(' ').pop() ===
-      //   'advance-layout'
-      // )
-      document.querySelector(".sidebar-main").className =
-        "sidebar-main hovered";
-    } else {
-      if (document.getElementById("sidebar-main"))
-        document.querySelector(".sidebar-main").className = "sidebar-main";
-    }
-  };
+const Sidebar = () => {
+  const { sidebarToggle } = useContext(CustomizerContext);
+  const [mainMenu, setMainMenu] = useState([]);
+  const [menuItems, setMenuItems] = useState([]);
 
   useEffect(() => {
-    document.querySelector(".left-arrow").classList.add("d-none");
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    // Carregar menu da API
-    const loadMenu = async () => {
+    const fetchMenu = async () => {
       try {
         const menuData = await MENUITEMS();
+        console.log("Menu carregado:", menuData); // Debug log
         setMainMenu(menuData);
-
-        // Configurar item ativo após carregar o menu
-        const currentUrl = window.location.pathname;
-        menuData.map((items) => {
-          items.Items.filter((Items) => {
-            if (Items.path === currentUrl) setNavActive(Items);
-            if (!Items.children) return false;
-            Items.children.filter((subItems) => {
-              if (subItems.path === currentUrl) setNavActive(subItems);
-              if (!subItems.children) return false;
-              subItems.children.filter((subSubItems) => {
-                if (subSubItems.path === currentUrl) {
-                  setNavActive(subSubItems);
-                  return true;
-                } else {
-                  return false;
-                }
-              });
-              return subItems;
-            });
-            return Items;
-          });
-          return items;
-        });
+        setMenuItems(menuData);
       } catch (error) {
-        console.error("Erro ao carregar menu:", error);
+        console.error("Erro ao carregar o menu:", error);
+        // Em caso de erro, usar um menu vazio ou padrão
+        setMainMenu([]);
+        setMenuItems([]);
       }
     };
 
-    loadMenu();
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [layout]);
-
-  const handleResize = () => {
-    setWidth(window.innerWidth - 500);
-  };
-
-  const activeClass = () => {
-    // document.querySelector('.sidebar-link').classList.add('active');
-    document.querySelector(".bg-overlay1").classList.add("active");
-  };
+    fetchMenu();
+  }, []);
 
   const setNavActive = (item) => {
-    mainmenu.map((menuItems) => {
-      menuItems.Items.filter((Items) => {
-        if (Items !== item) {
-          Items.active = false;
-          document.querySelector(".bg-overlay1").classList.remove("active");
-        }
-        if (Items.children && Items.children.includes(item)) {
-          Items.active = true;
-          document.querySelector(".sidebar-links").classList.add("active");
-        }
-        if (Items.children) {
-          Items.children.filter((submenuItems) => {
-            if (submenuItems.children && submenuItems.children.includes(item)) {
-              Items.active = true;
-              submenuItems.active = true;
-              return true;
-            } else {
-              return false;
+    if (!item.active) {
+      menuItems.map((menuSection) => {
+        menuSection.Items.filter((menuItem) => {
+          if (menuSection.Items.includes(item)) menuItem.active = false;
+          if (!menuItem.children) return false;
+          menuItem.children.forEach((child) => {
+            if (menuItem.children.includes(item)) {
+              child.active = false;
             }
+            if (!child.children) return false;
+            child.children.forEach((grandChild) => {
+              if (child.children.includes(item)) {
+                grandChild.active = false;
+              }
+            });
           });
-        }
-        return Items;
+          return menuItem;
+        });
+        return menuSection;
       });
-      return menuItems;
-    });
+    }
     item.active = !item.active;
-    setMainMenu([...mainmenu]);
+    setMainMenu([...menuItems]);
   };
 
-  const closeOverlay = () => {
-    document.querySelector(".bg-overlay1").classList.remove("active");
-    document.querySelector(".sidebar-links").classList.remove("active");
-  };
+  const activeClass = () => {};
+
+  // Se não há dados do menu ainda, mostrar loading ou menu vazio
+  if (!mainMenu || mainMenu.length === 0) {
+    return (
+      <div className={`sidebar-wrapper ${sidebarToggle ? "close_icon" : ""}`}>
+        <div>
+          <div className="logo-wrapper">
+            <a href="index.html">
+              <img
+                className="img-fluid for-light"
+                src={ RGLIcon }
+                alt=""
+              />
+              <img
+                className="img-fluid for-dark"
+                src={ RGLIcon }
+                alt=""
+              />
+            </a>
+            <div className="back-btn">
+              <i className="fa fa-angle-left"></i>
+            </div>
+            <div className="toggle-sidebar">
+              <i
+                className="status_toggle middle sidebar-toggle"
+                data-feather="grid"
+              ></i>
+            </div>
+          </div>
+          <div className="logo-icon-wrapper">
+            <a href="index.html">
+              <img className="img-fluid" src={ RGLIcon } alt="" />
+            </a>
+          </div>
+          <nav className="sidebar-main">
+            <div className="left-arrow" id="left-arrow">
+              <i data-feather="arrow-left"></i>
+            </div>
+            <div
+              id="sidebar-menu"
+              style={{ marginRight: "0px", paddingRight: "0px" }}
+            >
+              <ul className="sidebar-links" id="simple-bar">
+                <li className="back-btn">
+                  <a href="index.html">
+                    <img
+                      className="img-fluid"
+                      src={ RGLIcon }
+                      alt=""
+                    />
+                  </a>
+                  <div className="mobile-back text-end">
+                    <span>Back</span>
+                    <i
+                      className="fa fa-angle-right ps-2"
+                      aria-hidden="true"
+                    ></i>
+                  </div>
+                </li>
+                <li className="sidebar-list">
+                  <span>Carregando menu...</span>
+                </li>
+              </ul>
+            </div>
+            <div className="right-arrow" id="right-arrow">
+              <i data-feather="arrow-right"></i>
+            </div>
+          </nav>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <Fragment>
-      <div
-        className="bg-overlay1"
-        onClick={() => {
-          closeOverlay();
-        }}
-      ></div>
-      <div
-        className={`sidebar-wrapper ${toggleIcon ? "close_icon" : ""}`}
-        sidebar-layout="stroke-svg"
-      >
-        <SidebarIcon />
-        <SidebarLogo />
-        {/* sidebartoogle={sidebartoogle} */}
-        <SidebarMenu
-          setMainMenu={setMainMenu}
-          props={{ ...props, mainmenu }}
-          setNavActive={setNavActive}
-          activeClass={activeClass}
-          width={width}
-        />
+    <div className={`sidebar-wrapper ${sidebarToggle ? "close_icon" : ""}`}>
+      <div>
+        <div className="logo-wrapper">
+          <a href="index.html">
+            <img
+              className="img-fluid for-light"
+              src={ RGLIcon }
+              alt=""
+            />
+            <img
+              className="img-fluid for-dark"
+              src={ RGLIcon }
+              alt=""
+            />
+          </a>
+          <div className="back-btn">
+            <i className="fa fa-angle-left"></i>
+          </div>
+          <div className="toggle-sidebar">
+            <i
+              className="status_toggle middle sidebar-toggle"
+              data-feather="grid"
+            ></i>
+          </div>
+        </div>
+        <div className="logo-icon-wrapper">
+          <a href="index.html">
+            <img className="img-fluid" src={ RGLIcon } alt="" />
+          </a>
+        </div>
+        <nav className="sidebar-main">
+          <div className="left-arrow" id="left-arrow">
+            <i data-feather="arrow-left"></i>
+          </div>
+          <div
+            id="sidebar-menu"
+            style={{ marginRight: "0px", paddingRight: "0px" }}
+          >
+            <ul className="sidebar-links" id="simple-bar">
+              <li className="back-btn">
+                <a href="index.html">
+                  <img
+                    className="img-fluid"
+                    src={ RGLIcon }
+                    alt=""
+                  />
+                </a>
+                <div className="mobile-back text-end">
+                  <span>Back</span>
+                  <i className="fa fa-angle-right ps-2" aria-hidden="true"></i>
+                </div>
+              </li>
+
+              <SidebarMenuItems
+                menuItems={mainMenu}
+                setMainMenu={setMainMenu}
+                setNavActive={setNavActive}
+                activeClass={activeClass}
+              />
+            </ul>
+          </div>
+          <div className="right-arrow" id="right-arrow">
+            <i data-feather="arrow-right"></i>
+          </div>
+        </nav>
       </div>
-    </Fragment>
+    </div>
   );
 };
 

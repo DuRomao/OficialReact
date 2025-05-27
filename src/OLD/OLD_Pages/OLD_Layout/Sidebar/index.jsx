@@ -169,7 +169,7 @@ const Sidebar = () => {
                 <a href="index.html">
                   <img
                     className="img-fluid"
-                    src={require("../../../assets/images/logo/logo-icon.png")}
+                    src={require("../../../assets/img/logo/RGL1_FB_Icon.png")}
                     alt=""
                   />
                 </a>

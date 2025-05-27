@@ -12,7 +12,7 @@ const ComingBgImg = () => {
                     <div className="comingsoon comingsoon-bgimg">
                         <div className="comingsoon-inner text-center">
                             <a href="/">
-                                <Image attrImage={{ src: `${require('../../../assets/images/logo/logo.png')}`, alt: '' }} />
+                                <Image attrImage={{ src: `${require('../../../assets/img/logo/RGL1_FB.png')}`, alt: '' }} />
                             </a>
                             <H5>WE ARE COMING SOON</H5>
                             <div className="countdown" id="clockdiv">

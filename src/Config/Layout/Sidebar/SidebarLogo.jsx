@@ -3,7 +3,8 @@ import { Grid } from "react-feather";
 import { Link } from "react-router-dom";
 import CustomizerContext from "../../../_helper/Customizer";
 import { Image } from "../../../AbstractElements";
-import CubaIcon from "../../../assets/images/logo/logo.png";
+import RGLIcon from "../../../assets/img/logo/RGL1_FB.png";
+import RGLIconDark from "../../../assets/img/logo/RGL1_FB_Dark.png";
 
 const SidebarLogo = () => {
   const { mixLayout, toggleSidebar, toggleIcon, layout, layoutURL } =
@@ -24,7 +25,7 @@ const SidebarLogo = () => {
           <Image
             attrImage={{
               className: "img-fluid d-inline",
-              src: `${CubaIcon}`,
+              src: `${RGLIcon}`,
               alt: "",
             }}
           />
@@ -34,7 +35,7 @@ const SidebarLogo = () => {
           <Image
             attrImage={{
               className: "img-fluid d-inline",
-              src: `${require("../../../assets/images/logo/logo_dark.png")}`,
+              src: `${require({RGLIconDark})}`,
               alt: "",
             }}
           />

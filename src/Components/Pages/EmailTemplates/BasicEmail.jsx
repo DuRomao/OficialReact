@@ -17,7 +17,7 @@ const BasicEmail = () => {
                                                 <tbody>
                                                     <tr>
                                                         <td>
-                                                            <Image attrImage={{ src: `${require("../../../assets/images/logo/logo.png")}`, alt: "" }} />
+                                                            <Image attrImage={{ src: `${require("../../../assets/img/logo/RGL1_FB.png")}`, alt: "" }} />
                                                         </td>
                                                         <td className="desc"><span>Some Description</span></td>
                                                     </tr>

@@ -16,7 +16,7 @@ const BasicHeader = () => {
                                             <table className="inner-table">
                                                 <tbody>
                                                     <tr>
-                                                        <td><a href="/"><Image attrImage={{ className: "img-fluid", src: `${require("../../../assets/images/logo/logo.png")}`, alt: "" }} /></a></td>
+                                                        <td><a href="/"><Image attrImage={{ className: "img-fluid", src: `${require("../../../assets/img/logo/RGL1_FB.png")}`, alt: "" }} /></a></td>
                                                         <td className="desc"><span>Some Description</span></td>
                                                     </tr>
                                                 </tbody>
