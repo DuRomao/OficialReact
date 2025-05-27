@@ -1,77 +1,304 @@
 
-/* Estilos para o Editor de Usuários */
-.img-120 {
-  width: 120px !important;
-  height: 120px !important;
+/* Cuba Theme - User Edit Styles */
+
+/* Page Header */
+.page-header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0;
 }
 
-.form-control-lg {
+/* Cuba Card Styles */
+.cuba-card {
+  border: 1px solid #e8ecef;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(62, 57, 107, 0.07);
+  background: #fff;
+}
+
+.cuba-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px 12px 0 0;
+  padding: 1.25rem 1.5rem;
+  border: none;
+}
+
+.cuba-header .card-title {
   font-size: 1.1rem;
-  padding: 0.75rem 1rem;
-}
-
-.card {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  border: 1px solid #e9ecef;
-  margin-bottom: 1rem;
-}
-
-.card-header {
   font-weight: 600;
-  border-bottom: 2px solid rgba(255,255,255,0.2);
+  margin: 0;
 }
 
-.card-header h6 {
-  font-size: 0.95rem;
-  font-weight: 600;
+.cuba-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
 }
 
-.photo-editor-canvas {
-  border: 2px dashed #dee2e6;
+.cuba-body {
+  padding: 2rem;
+}
+
+/* Cuba Form Styles */
+.cuba-form {
+  margin: 0;
+}
+
+.cuba-section {
+  margin-bottom: 2rem;
+  background: #f8f9fa;
   border-radius: 8px;
-  cursor: crosshair;
-  transition: border-color 0.3s ease;
+  padding: 1.5rem;
+  border: 1px solid #e9ecef;
 }
 
-.photo-editor-canvas:hover {
-  border-color: #007bff;
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  font-weight: 600;
+  color: #495057;
+  font-size: 0.95rem;
+}
+
+.section-header i {
+  margin-right: 0.5rem;
+  color: #667eea;
+  font-size: 1rem;
+}
+
+/* Photo Section */
+.photo-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.photo-container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.photo-preview {
+  flex-shrink: 0;
+}
+
+.cuba-avatar {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cuba-avatar-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6c757d;
+  font-size: 1.5rem;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Form Fields */
+.cuba-field {
+  margin-bottom: 1.25rem;
+}
+
+.cuba-label {
+  font-weight: 500;
+  color: #495057;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.cuba-input {
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.cuba-input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+  background: white;
+}
+
+/* Buttons */
+.cuba-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 6px;
+  padding: 0.625rem 1.25rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.cuba-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46a3 100%);
+}
+
+.cuba-btn-secondary {
+  background: #6c757d;
+  border: none;
+  border-radius: 6px;
+  padding: 0.625rem 1.25rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.cuba-btn-secondary:hover {
+  background: #5a6268;
+  transform: translateY(-1px);
+}
+
+/* Actions */
+.cuba-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e9ecef;
+}
+
+/* Alert */
+.cuba-alert {
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 1.5rem;
+}
+
+/* Modal Styles */
+.cuba-modal .modal-content {
+  border-radius: 12px;
+  border: none;
+  overflow: hidden;
+}
+
+.cuba-modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 1rem 1.5rem;
+}
+
+.cuba-modal-header h5 {
+  margin: 0;
+  font-weight: 600;
+}
+
+.cuba-modal-header .btn-close {
+  filter: invert(1);
+}
+
+.cuba-modal-body {
+  background: #f8f9fa;
+}
+
+/* Photo Editor Styles */
+.cuba-photo-editor {
+  background: white;
+  border-radius: 0 0 12px 12px;
+}
+
+.photo-editor-toolbar {
+  padding: 1rem 1.5rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.photo-editor-tabs {
+  padding: 1rem 1.5rem 0;
+  background: white;
+}
+
+.photo-editor-content {
+  padding: 1.5rem;
+  min-height: 400px;
+}
+
+.photo-editor-actions {
+  padding: 1rem 1.5rem;
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+/* Crop Section */
+.crop-section {
+  text-align: center;
 }
 
 .cropper-container {
   border-radius: 8px;
   overflow: hidden;
+  border: 1px solid #e9ecef;
+  margin-bottom: 1rem;
 }
 
-.btn-group .btn {
-  border-radius: 0;
-}
-
-.btn-group .btn:first-child {
-  border-top-left-radius: 0.375rem;
-  border-bottom-left-radius: 0.375rem;
-}
-
-.btn-group .btn:last-child {
-  border-top-right-radius: 0.375rem;
-  border-bottom-right-radius: 0.375rem;
-}
-
-.text-list-item {
+/* Text Section */
+.text-controls {
   background: #f8f9fa;
-  border: 1px solid #dee2e6;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.text-list {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.text-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  background: #f8f9fa;
   border-radius: 4px;
-  transition: all 0.2s ease;
+  border: 1px solid #e9ecef;
 }
 
-.text-list-item:hover {
-  background: #e9ecef;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+/* Icons Section */
+.icons-section {
+  text-align: center;
 }
 
-.icon-grid {
+.icons-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
-  gap: 8px;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
 }
 
 .icon-btn {
@@ -80,83 +307,75 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
-  border-radius: 8px;
+  font-size: 20px;
+  border-radius: 6px;
   transition: all 0.2s ease;
 }
 
 .icon-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.form-section {
-  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+.icons-list {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  margin-top: 1rem;
 }
 
-.section-title {
-  color: #495057;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 2px solid #e9ecef;
+.icon-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  background: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
 }
 
+/* Preview Section */
+.preview-section {
+  text-align: center;
+}
+
+.canvas-container {
+  display: inline-block;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.preview-canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  cursor: crosshair;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  .card-body {
+  .cuba-body {
     padding: 1rem;
   }
   
-  .btn-group {
+  .cuba-section {
+    padding: 1rem;
+  }
+  
+  .photo-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .cuba-actions {
     flex-direction: column;
   }
   
-  .btn-group .btn {
-    border-radius: 0.375rem !important;
-    margin-bottom: 0.25rem;
-  }
-  
-  .d-flex.gap-3 {
-    flex-direction: column;
-    gap: 1rem !important;
-  }
-}
-
-/* Animações */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.card {
-  animation: fadeIn 0.3s ease-out;
-}
-
-/* Loading states */
-.btn[disabled] {
-  cursor: not-allowed;
-  opacity: 0.6;
-}
-
-.fa-spin {
-  animation: fa-spin 1s infinite linear;
-}
-
-@keyframes fa-spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(359deg);
+  .icons-grid {
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
   }
 }
