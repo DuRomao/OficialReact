@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ConfigDB from '../../Config/ThemeConfig';
+import ConfigDB from '../../Config/Theme/ThemeConfig';
 import Context from './index';
 
 const AnimationThemeProvider = (props) => {

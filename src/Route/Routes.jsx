@@ -1,5 +1,5 @@
 // dashbaord
-import Default from "../Components/Dashboard/Default";
+import Default from "../Pages/Dashboard/Default";
 
 export const routes = [
   {

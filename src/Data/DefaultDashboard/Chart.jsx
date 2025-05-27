@@ -1,4 +1,4 @@
-import ConfigDB from "../../Config/ThemeConfig";
+import ConfigDB from "../../Config/Theme/ThemeConfig";
 
 const primary = ConfigDB.data.color.primary_color;
 

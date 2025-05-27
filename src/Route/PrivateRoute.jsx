@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Navigate, Outlet ,useNavigate} from "react-router-dom";
 import axios from "axios";
-import { API_URL } from "../Constant";
-import Loader from "../Layout/Loader";
+import { API_URL } from "../Config/Constant";
+import Loader from "../Config/Layout/Loader";
 import LogoutSistema, { refreshToken } from "../Auth/Logout"
 
 const PrivateRoute = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     const verifyAuth = async () => {
       try {
@@ -33,7 +33,7 @@ const PrivateRoute = () => {
         if (response.status === 200 && response.data.valid) {
           setIsAuthenticated(true);
           localStorage.setItem("Authenticated", "true");
-          
+
           // Configurar refresh automático do token a cada 25 minutos
           const refreshInterval = setInterval(async () => {
             try {
@@ -53,7 +53,7 @@ const PrivateRoute = () => {
         }
       } catch (error) {
         console.error("Erro na verificação de autenticação:", error);
-        
+
         // Tentar fazer refresh do token antes de fazer logout
         try {
           await refreshToken();

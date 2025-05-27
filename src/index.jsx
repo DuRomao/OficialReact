@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.scss";
 import App from "./App";
-import "./i18n";
+import "./Config/i18/i18n";
 import reportWebVitals from "./reportWebVitals";
 
 const Root = () => {

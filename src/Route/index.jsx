@@ -2,15 +2,15 @@ import React from "react";
 import { Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { authRoutes } from "./AuthRoutes";
-import { classes } from "../Data/Layouts";
-import Loader from "../Layout/Loader";
-import LayoutRoutes from "../Route/LayoutRoutes";
-import Signin from "../Auth/Signin";
 import PrivateRoute from "./PrivateRoute";
+import LayoutRoutes from "./LayoutRoutes";
+import { classes } from "../Data/Layouts";
+import Loader from "../Config/Layout/Loader";
+import Signin from "../Auth/Signin";
 import LogoutSistema from "../Auth/Logout";
 
 const Routers = () => {
-  const [authenticated, setAuthenticated] = useState(false); // <-- CORRETO
+  const [authenticated, setAuthenticated] = useState(false); 
   const [isLoading, setIsLoading] = useState(true);
   
   const defaultLayoutObj = classes.find(
@@ -25,23 +25,19 @@ const Routers = () => {
     const checkInitialAuth = () => {
       const token = localStorage.getItem("Token");
       const authStatus = localStorage.getItem("Authenticated");
-
       if (token && authStatus === "true") {
         setAuthenticated(true);
       } else {
         LogoutSistema();
       };
-
       setIsLoading(false);
     };
-
     checkInitialAuth();
-
     console.ignoredYellowBox = ["Warning: Each", "Warning: Failed"];
     console.disableYellowBox = true;
 
     return () => {
-      abortController.abort();
+      return () => abortController.abort();
     };
   }, []);
 

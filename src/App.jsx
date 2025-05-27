@@ -1,5 +1,6 @@
 import React from 'react';
 import Routers from './Route';
+import { AuthProvider } from './Route/AuthContext';
 import ChartistProvider from './_helper/Chartist/ChartistProvider';
 import ChartjsProvider from './_helper/Chartjs/ChartProvider';
 import GoogleChartProvider from './_helper/GoogleChart/GoogleChartProvider';
@@ -22,8 +23,8 @@ import LearningProvider from './_helper/Learning/LearningProvider';
 import FaqProvider from './_helper/Faq/FaqProvider';
 import AnimationThemeProvider from './_helper/AnimationTheme/AnimationThemeProvider';
 import CustomizerProvider from './_helper/Customizer/CustomizerProvider';
-import "./i18n";
-import "./_helper/TokenManager";
+import "./Config/i18/i18n";
+import "./Auth/TokenManager";
 
 const App = () => (
   <div className='App'>
@@ -49,7 +50,9 @@ const App = () => (
                                           <ChartjsProvider>
                                             <ChartistProvider>
                                               <AnimationThemeProvider>
-                                                <Routers />
+                                                <AuthProvider>
+                                                  <Routers />
+                                                </AuthProvider>
                                               </AnimationThemeProvider>
                                             </ChartistProvider>
                                           </ChartjsProvider>

@@ -1,24 +1,13 @@
-
-import React, { Fragment, useContext } from "react";
-import sad from "../../../assets/images/other-images/sad.png";
-import { Link, useNavigate } from "react-router-dom";
-import { Container, Button, Media, Col } from "reactstrap";
-import { BACK_TO_HOME_PAGE, MENSAGEM_ERROR_400 } from "../../../Constant";
-import CustomizerContext from "../../../_helper/Customizer";
-import { P, H2 } from "../../../AbstractElements";
-import LogoutSistema from "../../../Auth/Logout";
+import React, { Fragment, useContext } from 'react';
+import sad from '../../../assets/images/other-images/sad.png';
+import { Link } from 'react-router-dom';
+import { Container, Button, Media, Col } from "reactstrap"
+import { BACK_TO_HOME_PAGE } from "../../../Constant";
+import CustomizerContext from '../../../_helper/Customizer';
+import { P, H2 } from '../../../AbstractElements';
 
 const Error500 = () => {
     const { layoutURL } = useContext(CustomizerContext);
-    const navigate = useNavigate();
-
-    const handleLogout = () => {
-        LogoutSistema();
-        navigate(`${process.env.PUBLIC_URL}/login`);
-    };
-
-    const isAuthenticated = localStorage.getItem("Authenticated") === "true";
-
     return (
         <Fragment>
             <div className="page-wrapper">
@@ -26,44 +15,12 @@ const Error500 = () => {
                     <Container>
                         <Media body className="img-100" src={sad} alt="" />
                         <div className="error-heading">
-                            <H2 attrH2={{ className: "headline font-primary" }}>
-                                {"500"}
-                            </H2>
+                            <H2 attrH2={{ className: "headline font-primary" }} >{"500"}</H2>
                         </div>
                         <Col md="8 offset-md-2">
-                            <P attrPara={{ className: "sub-content" }}>
-                                {MENSAGEM_ERROR_400}
-                            </P>
+                            <P attrPara={{ className: "sub-content" }} >{"The page you are attempting to reach is currently not available. This may be because the page does not exist or has been moved."}</P>
                         </Col>
-                        <div className="d-flex justify-content-center gap-3 flex-wrap">
-                            {isAuthenticated ? (
-                                <Link
-                                    to={`${process.env.PUBLIC_URL}/dashboard/default/${layoutURL}`}
-                                >
-                                    <Button color="primary" size="lg">
-                                        {BACK_TO_HOME_PAGE}
-                                    </Button>
-                                </Link>
-                            ) : (
-                                <Link
-                                    to={`${process.env.PUBLIC_URL}/login`}
-                                >
-                                    <Button color="primary" size="lg">
-                                        {"Fazer Login"}
-                                    </Button>
-                                </Link>
-                            )}
-                            
-                            {isAuthenticated && (
-                                <Button 
-                                    color="secondary" 
-                                    size="lg" 
-                                    onClick={handleLogout}
-                                >
-                                    {"Sair"}
-                                </Button>
-                            )}
-                        </div>
+                        <Link to={`${process.env.PUBLIC_URL}/dashboard/default/${layoutURL}`}><Button color="primary-gradien" size='lg'>{BACK_TO_HOME_PAGE}</Button></Link>
                     </Container>
                 </div>
             </div>

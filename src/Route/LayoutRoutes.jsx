@@ -2,7 +2,7 @@
 import React, { Fragment } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { routes } from "./Routes";
-import AppLayout from "../Layout/Layout";
+import AppLayout from "../Config/Layout/Layout";
 
 const LayoutRoutes = () => {
   return (

@@ -1,11 +1,11 @@
-import ForgetPwd from '../Components/Pages/Auth/ForgetPwd';
-import Maintenance from '../Components/Pages/Auth/Maintenance';
-import ErrorPage1 from '../Components/Pages/ErrorPages/ErrorPage400';
-import ErrorPage2 from '../Components/Pages/ErrorPages/ErrorPage401';
-import ErrorPage3 from '../Components/Pages/ErrorPages/ErrorPage403';
-import ErrorPage4 from '../Components/Pages/ErrorPages/ErrorPage404';
-import Error500 from '../Components/Pages/ErrorPages/ErrorPage500';
-import Error503 from '../Components/Pages/ErrorPages/ErrorPage503';
+import ForgetPwd from '../Auth/ForgetPwd';
+import Maintenance from '../Auth/Maintenance';
+import ErrorPage1 from '../Pages/ErrorPages/ErrorPage400';
+import ErrorPage2 from '../Pages/ErrorPages/ErrorPage401';
+import ErrorPage3 from '../Pages/ErrorPages/ErrorPage403';
+import ErrorPage4 from '../Pages/ErrorPages/ErrorPage404';
+import Error500 from '../Pages/ErrorPages/ErrorPage500';
+import Error503 from '../Pages/ErrorPages/ErrorPage503';
 
 export const authRoutes = [
   { path: `${process.env.PUBLIC_URL}/pages/authentication/forget-pwd/:layout`, Component: <ForgetPwd /> },

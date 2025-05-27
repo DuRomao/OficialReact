@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ConfigDB from '../../Config/ThemeConfig';
+import ConfigDB from '../../Config/Theme/ThemeConfig';
 import { classes } from '../../Data/Layouts';
 import Context from './index';
 

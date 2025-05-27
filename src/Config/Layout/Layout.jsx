@@ -1,0 +1,68 @@
+import React, { Fragment ,useRef} from "react";
+import { ToastContainer } from "react-toastify";
+import { useContext } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+
+import Taptop from "./TapTop";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
+import ThemeCustomize from "../Layout/ThemeCustomizer";
+import Footer from "./Footer";
+import CustomizerContext from "../../_helper/Customizer";
+import AnimationThemeContext from "../../_helper/AnimationTheme";
+import ConfigDB from "../../Config/Theme/ThemeConfig";
+import Loader from "./Loader";
+const AppLayout = ({ children, classNames, ...rest }) => {
+  const { layout } = useContext(CustomizerContext);
+  const { sidebarIconType } = useContext(CustomizerContext);
+
+  const layout1 = localStorage.getItem("sidebar_layout") || layout;
+  const sideBarIcon =
+    localStorage.getItem("sidebar_icon_type") || sidebarIconType;
+  const location = useLocation();
+  const { animation } = useContext(AnimationThemeContext);
+  const animationTheme =
+    localStorage.getItem("animation") ||
+    animation ||
+    ConfigDB.data.router_animation;
+  const nodeRef = useRef(null);
+
+  return (
+    <Fragment>
+      <Loader />
+      <Taptop />
+      <div
+        className={`page-wrapper ${layout1}`}
+        sidebar-layout={sideBarIcon}
+        id="pageWrapper"
+      >
+        <Header />
+        <div className="page-body-wrapper">
+          <Sidebar />
+          <TransitionGroup {...rest}>
+            <CSSTransition
+              key={location.key}
+              timeout={100}
+              classNames={animationTheme}
+              unmountOnExit
+              nodeRef={nodeRef}
+            >
+              <div ref={nodeRef} className="page-body">
+                <div>
+                  <div>
+                    <Outlet />
+                  </div>
+                </div>
+              </div>
+            </CSSTransition>
+          </TransitionGroup>
+          <Footer />
+        </div>
+      </div>
+      <ThemeCustomize />
+      <ToastContainer />
+    </Fragment>
+  );
+};
+export default AppLayout;
