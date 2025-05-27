@@ -20,13 +20,33 @@ const SidebarMenuItems = ({
 
   const { t } = useTranslation();
 
-  // Debug logs
-  console.log("SidebarMenuItems - menuItems:", menuItems);
-  console.log("SidebarMenuItems - menuItems length:", menuItems?.length);
+  // Debug logs detalhados
+  console.log("=== SIDEBARMENUITEMSCOMPONENT RENDERIZADO ===");
+  console.log("menuItems recebido:", menuItems);
+  console.log("Tipo de menuItems:", typeof menuItems);
+  console.log("É array?", Array.isArray(menuItems));
+  console.log("menuItems length:", menuItems?.length);
+  console.log("Primeiro item:", menuItems?.[0]);
+  
+  if (menuItems && menuItems.length > 0) {
+    console.log("=== ESTRUTURA COMPLETA DO MENU ===");
+    menuItems.forEach((section, sectionIndex) => {
+      console.log(`Seção ${sectionIndex}:`);
+      console.log(`  Title: ${section.menutitle}`);
+      console.log(`  Content: ${section.menucontent}`);
+      console.log(`  Items count: ${section.Items?.length || 0}`);
+      
+      if (section.Items && section.Items.length > 0) {
+        section.Items.forEach((item, itemIndex) => {
+          console.log(`    Item ${itemIndex}: ${item.title} (${item.type})`);
+        });
+      }
+    });
+  }
   
   // Se menuItems estiver vazio ou undefined
   if (!menuItems || menuItems.length === 0) {
-    console.log("SidebarMenuItems - Menu vazio ou não carregado");
+    console.log("SidebarMenuItems - Menu vazio ou não carregado - renderizando mensagem");
     return (
       <li className="sidebar-list">
         <span>Menu não disponível</span>
