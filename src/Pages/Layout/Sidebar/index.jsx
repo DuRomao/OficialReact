@@ -1,198 +1,154 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
+import CustomContext from "../../_helper/Customizer";
 import { MENUITEMS } from "./Menu";
-import SidebarMenuItems from "./SidebarMenuItems";
-import CustomizerContext from "../../../_helper/Customizer";
+import SidebarIcon from "./SidebarIcon";
+import SidebarLogo from "./SidebarLogo";
+import SidebarMenu from "./SidebarMenu";
 
-const Sidebar = () => {
-  const { sidebarToggle } = useContext(CustomizerContext);
-  const [mainMenu, setMainMenu] = useState([]);
-  const [menuItems, setMenuItems] = useState([]);
+const Sidebar = (props) => {
+  const customizer = useContext(CustomContext);
+  const { toggleIcon } = useContext(CustomContext);
+  const id = window.location.pathname.split("/").pop();
+  const defaultLayout = Object.keys(customizer.layout);
 
-  useEffect(() => {
-    const fetchMenu = async () => {
-      try {
-        const menuData = await MENUITEMS();
-        console.log("Menu carregado:", menuData); // Debug log
-        setMainMenu(menuData);
-        setMenuItems(menuData);
-      } catch (error) {
-        console.error("Erro ao carregar o menu:", error);
-        // Em caso de erro, usar um menu vazio ou padrão
-        setMainMenu([]);
-        setMenuItems([]);
-      }
-    };
+  const layout = id ? id : defaultLayout;
+  const [mainmenu, setMainMenu] = useState([]);
 
-    fetchMenu();
-  }, []);
+  const [width, setWidth] = useState(0);
 
-  const setNavActive = (item) => {
-    if (!item.active) {
-      menuItems.map((menuSection) => {
-        menuSection.Items.filter((menuItem) => {
-          if (menuSection.Items.includes(item)) menuItem.active = false;
-          if (!menuItem.children) return false;
-          menuItem.children.forEach((child) => {
-            if (menuItem.children.includes(item)) {
-              child.active = false;
-            }
-            if (!child.children) return false;
-            child.children.forEach((grandChild) => {
-              if (child.children.includes(item)) {
-                grandChild.active = false;
-              }
-            });
-          });
-          return menuItem;
-        });
-        return menuSection;
-      });
+  const handleScroll = () => {
+    if (window.scrollY > 400) {
+      // if (
+      //   customizer.settings.sidebar.type.split(' ').pop() ===
+      //   'material-type' ||
+      //   customizer.settings.sidebar.type.split(' ').pop() ===
+      //   'advance-layout'
+      // )
+      document.querySelector(".sidebar-main").className =
+        "sidebar-main hovered";
+    } else {
+      if (document.getElementById("sidebar-main"))
+        document.querySelector(".sidebar-main").className = "sidebar-main";
     }
-    item.active = !item.active;
-    setMainMenu([...menuItems]);
   };
 
-  const activeClass = () => {};
+  useEffect(() => {
+    document.querySelector(".left-arrow").classList.add("d-none");
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    
+    // Carregar menu da API
+    const loadMenu = async () => {
+      try {
+        const menuData = await MENUITEMS();
+        setMainMenu(menuData);
+        
+        // Configurar item ativo após carregar o menu
+        const currentUrl = window.location.pathname;
+        menuData.map((items) => {
+      items.Items.filter((Items) => {
+        if (Items.path === currentUrl) setNavActive(Items);
+        if (!Items.children) return false;
+        Items.children.filter((subItems) => {
+          if (subItems.path === currentUrl) setNavActive(subItems);
+          if (!subItems.children) return false;
+          subItems.children.filter((subSubItems) => {
+            if (subSubItems.path === currentUrl) {
+              setNavActive(subSubItems);
+              return true;
+            } else {
+              return false;
+            }
+          });
+          return subItems;
+        });
+        return Items;
+      });
+      return items;
+        });
+      } catch (error) {
+        console.error("Erro ao carregar menu:", error);
+      }
+    };
+    
+    loadMenu();
+    
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [layout]);
 
-  // Se não há dados do menu ainda, mostrar loading ou menu vazio
-  if (!mainMenu || mainMenu.length === 0) {
-    return (
-      <div className={`sidebar-wrapper ${sidebarToggle ? "close_icon" : ""}`}>
-        <div>
-          <div className="logo-wrapper">
-            <a href="index.html">
-              <img
-                className="img-fluid for-light"
-                src={require("../../../assets/images/logo/logo.png")}
-                alt=""
-              />
-              <img
-                className="img-fluid for-dark"
-                src={require("../../../assets/images/logo/logo_dark.png")}
-                alt=""
-              />
-            </a>
-            <div className="back-btn">
-              <i className="fa fa-angle-left"></i>
-            </div>
-            <div className="toggle-sidebar">
-              <i className="status_toggle middle sidebar-toggle" data-feather="grid"></i>
-            </div>
-          </div>
-          <div className="logo-icon-wrapper">
-            <a href="index.html">
-              <img
-                className="img-fluid"
-                src={require("../../../assets/images/logo/logo-icon.png")}
-                alt=""
-              />
-            </a>
-          </div>
-          <nav className="sidebar-main">
-            <div className="left-arrow" id="left-arrow">
-              <i data-feather="arrow-left"></i>
-            </div>
-            <div
-              id="sidebar-menu"
-              style={{ marginRight: "0px", paddingRight: "0px" }}
-            >
-              <ul className="sidebar-links" id="simple-bar">
-                <li className="back-btn">
-                  <a href="index.html">
-                    <img
-                      className="img-fluid"
-                      src={require("../../../assets/images/logo/logo-icon.png")}
-                      alt=""
-                    />
-                  </a>
-                  <div className="mobile-back text-end">
-                    <span>Back</span>
-                    <i className="fa fa-angle-right ps-2" aria-hidden="true"></i>
-                  </div>
-                </li>
-                <li className="sidebar-list">
-                  <span>Carregando menu...</span>
-                </li>
-              </ul>
-            </div>
-            <div className="right-arrow" id="right-arrow">
-              <i data-feather="arrow-right"></i>
-            </div>
-          </nav>
-        </div>
-      </div>
-    );
-  }
+  const handleResize = () => {
+    setWidth(window.innerWidth - 500);
+  };
+
+  const activeClass = () => {
+    // document.querySelector('.sidebar-link').classList.add('active');
+    document.querySelector(".bg-overlay1").classList.add("active");
+  };
+
+  const setNavActive = (item) => {
+    mainmenu.map((menuItems) => {
+      menuItems.Items.filter((Items) => {
+        if (Items !== item) {
+          Items.active = false;
+          document.querySelector(".bg-overlay1").classList.remove("active");
+        }
+        if (Items.children && Items.children.includes(item)) {
+          Items.active = true;
+          document.querySelector(".sidebar-links").classList.add("active");
+        }
+        if (Items.children) {
+          Items.children.filter((submenuItems) => {
+            if (submenuItems.children && submenuItems.children.includes(item)) {
+              Items.active = true;
+              submenuItems.active = true;
+              return true;
+            } else {
+              return false;
+            }
+          });
+        }
+        return Items;
+      });
+      return menuItems;
+    });
+    item.active = !item.active;
+    setMainMenu([...mainmenu]);
+  };
+
+  const closeOverlay = () => {
+    document.querySelector(".bg-overlay1").classList.remove("active");
+    document.querySelector(".sidebar-links").classList.remove("active");
+  };
 
   return (
-    <div className={`sidebar-wrapper ${sidebarToggle ? "close_icon" : ""}`}>
-      <div>
-        <div className="logo-wrapper">
-          <a href="index.html">
-            <img
-              className="img-fluid for-light"
-              src={require("../../../assets/images/logo/logo.png")}
-              alt=""
-            />
-            <img
-              className="img-fluid for-dark"
-              src={require("../../../assets/images/logo/logo_dark.png")}
-              alt=""
-            />
-          </a>
-          <div className="back-btn">
-            <i className="fa fa-angle-left"></i>
-          </div>
-          <div className="toggle-sidebar">
-            <i className="status_toggle middle sidebar-toggle" data-feather="grid"></i>
-          </div>
-        </div>
-        <div className="logo-icon-wrapper">
-          <a href="index.html">
-            <img
-              className="img-fluid"
-              src={require("../../../assets/images/logo/logo-icon.png")}
-              alt=""
-            />
-          </a>
-        </div>
-        <nav className="sidebar-main">
-          <div className="left-arrow" id="left-arrow">
-            <i data-feather="arrow-left"></i>
-          </div>
-          <div
-            id="sidebar-menu"
-            style={{ marginRight: "0px", paddingRight: "0px" }}
-          >
-            <ul className="sidebar-links" id="simple-bar">
-              <li className="back-btn">
-                <a href="index.html">
-                  <img
-                    className="img-fluid"
-                    src={require("../../../assets/images/logo/logo-icon.png")}
-                    alt=""
-                  />
-                </a>
-                <div className="mobile-back text-end">
-                  <span>Back</span>
-                  <i className="fa fa-angle-right ps-2" aria-hidden="true"></i>
-                </div>
-              </li>
-
-              <SidebarMenuItems
-                menuItems={mainMenu}
-                setMainMenu={setMainMenu}
-                setNavActive={setNavActive}
-                activeClass={activeClass}
-              />
-            </ul>
-          </div>
-          <div className="right-arrow" id="right-arrow">
-            <i data-feather="arrow-right"></i>
-          </div>
-        </nav>
+    <Fragment>
+      <div
+        className="bg-overlay1"
+        onClick={() => {
+          closeOverlay();
+        }}
+      ></div>
+      <div
+        className={`sidebar-wrapper ${toggleIcon ? "close_icon" : ""}`}
+        sidebar-layout="stroke-svg"
+      >
+        <SidebarIcon />
+        <SidebarLogo />
+        {/* sidebartoogle={sidebartoogle} */}
+        <SidebarMenu
+          setMainMenu={setMainMenu}
+          props={{...props, mainmenu}}
+          setNavActive={setNavActive}
+          activeClass={activeClass}
+          width={width}
+        />
       </div>
-    </div>
+    </Fragment>
   );
 };
 
