@@ -17,9 +17,7 @@ const SidebarMenu = ({
   const [margin, setMargin] = useState(0);
 
 
-  const handleClick = (e, path) => {
-    console.log("Clicou no menu:", path);
-  };
+  
   
   const scrollToRight = () => {
     if (margin <= -2598 || margin <= -2034) {

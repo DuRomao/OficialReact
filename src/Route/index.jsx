@@ -10,7 +10,6 @@ import Signin from "../Auth/Signin";
 import LogoutSistema from "../Auth/Logout";
 
 const Routers = () => {
-  const [authenticated, setAuthenticated] = useState(false); 
   const [isLoading, setIsLoading] = useState(true);
   
   const defaultLayoutObj = classes.find(
@@ -25,9 +24,7 @@ const Routers = () => {
     const checkInitialAuth = () => {
       const token = localStorage.getItem("Token");
       const authStatus = localStorage.getItem("Authenticated");
-      if (token && authStatus === "true") {
-        setAuthenticated(true);
-      } else {
+      if (!token || authStatus !== "true") {
         LogoutSistema();
       };
       setIsLoading(false);
