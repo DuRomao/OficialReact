@@ -1,6 +1,6 @@
 import React from 'react';
 import Routers from './Route';
-import { AuthProvider } from './Route/AuthContext';
+//import { AuthProvider } from './Route/AuthContext';
 import ChartistProvider from './_helper/Chartist/ChartistProvider';
 import ChartjsProvider from './_helper/Chartjs/ChartProvider';
 import GoogleChartProvider from './_helper/GoogleChart/GoogleChartProvider';
@@ -50,10 +50,8 @@ const App = () => (
                                           <ChartjsProvider>
                                             <ChartistProvider>
                                               <AnimationThemeProvider>
-                                                <AuthProvider>
                                                   <Routers />
-                                                </AuthProvider>
-                                              </AnimationThemeProvider>
+                                               </AnimationThemeProvider>
                                             </ChartistProvider>
                                           </ChartjsProvider>
                                         </GoogleChartProvider>
