@@ -19,6 +19,20 @@ const SidebarMenuItems = ({
   const CurrentPath = window.location.pathname;
 
   const { t } = useTranslation();
+
+  // Debug logs
+  console.log("SidebarMenuItems - menuItems:", menuItems);
+  console.log("SidebarMenuItems - menuItems length:", menuItems?.length);
+  
+  // Se menuItems estiver vazio ou undefined
+  if (!menuItems || menuItems.length === 0) {
+    console.log("SidebarMenuItems - Menu vazio ou não carregado");
+    return (
+      <li className="sidebar-list">
+        <span>Menu não disponível</span>
+      </li>
+    );
+  }
   const toggletNavActive = (item) => {
     if (window.innerWidth <= 991) {
       document.querySelector(".page-header").className =
