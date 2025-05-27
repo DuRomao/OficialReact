@@ -9,13 +9,34 @@ const Sidebar = () => {
   const [menuItems, setMenuItems] = useState([]);
 
   useEffect(() => {
+    console.log("=== SIDEBAR useEffect INICIADO ===");
+    
     const fetchMenu = async () => {
       try {
+        console.log("Chamando MENUITEMS...");
         const menuData = await MENUITEMS();
-        console.log("Menu carregado:", menuData); // Debug log
-        setMainMenu(menuData);
-        setMenuItems(menuData);
+        
+        console.log("=== DADOS RECEBIDOS NO SIDEBAR ===");
+        console.log("menuData:", menuData);
+        console.log("Tipo:", typeof menuData);
+        console.log("É array?", Array.isArray(menuData));
+        console.log("Length:", menuData?.length);
+        console.log("Primeiro item:", menuData?.[0]);
+        
+        if (menuData && menuData.length > 0) {
+          console.log("Definindo menu com dados:", menuData);
+          setMainMenu(menuData);
+          setMenuItems(menuData);
+        } else {
+          console.warn("Menu vazio ou inválido recebido");
+          setMainMenu([]);
+          setMenuItems([]);
+        }
+        
+        console.log("States atualizados - mainMenu e menuItems definidos");
+        
       } catch (error) {
+        console.error("=== ERRO NO SIDEBAR ===");
         console.error("Erro ao carregar o menu:", error);
         // Em caso de erro, usar um menu vazio ou padrão
         setMainMenu([]);
