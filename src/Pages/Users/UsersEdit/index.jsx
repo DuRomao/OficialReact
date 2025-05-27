@@ -1,34 +1,55 @@
-import React, { Fragment } from "react";
-import { Col, Container, Row } from "reactstrap";
+
+import React, { Fragment, useState, useContext } from "react";
+import { Container, Row, Col, Card, CardBody, CardHeader } from "reactstrap";
 import { Breadcrumbs } from "../../../AbstractElements";
-import EditMyProfile from "./EditmyProfile";
-import MyProfileEdit from "./MyProfile";
-import UserTable from "./UserTable";
+import UserEditForm from "./UserEditForm";
+import UserPhotoEditor from "./UserPhotoEditor";
+import CustomizerContext from "../../../_helper/Customizer";
 
 const UsersEditContain = () => {
+  const { layoutURL } = useContext(CustomizerContext);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [showPhotoEditor, setShowPhotoEditor] = useState(false);
+
   return (
     <Fragment>
-      <Breadcrumbs
-        mainTitle="Edit Profile"
-        parent="Users"
-        title="Edit Profile"
-      />
+      <Breadcrumbs mainTitle="Editar Usuário" parent="Usuários" title="Editar" />
       <Container fluid={true}>
-        <div className="edit-profile">
-          <Row>
-            <Col xl="4">
-              <MyProfileEdit />
-            </Col>
-            <Col xl="8">
-              <EditMyProfile />
-            </Col>
-            <Col md="12">
-              <UserTable />
-            </Col>
-          </Row>
-        </div>
+        <Row>
+          <Col sm="12">
+            <Card>
+              <CardHeader>
+                <h5>Editar Usuário</h5>
+              </CardHeader>
+              <CardBody>
+                <Row>
+                  <Col xl="8">
+                    <UserEditForm 
+                      selectedUser={selectedUser} 
+                      setSelectedUser={setSelectedUser}
+                      onShowPhotoEditor={() => setShowPhotoEditor(true)}
+                    />
+                  </Col>
+                  <Col xl="4">
+                    {showPhotoEditor && (
+                      <UserPhotoEditor 
+                        user={selectedUser}
+                        onClose={() => setShowPhotoEditor(false)}
+                        onSave={(photoData) => {
+                          setSelectedUser({...selectedUser, UserFoto: photoData});
+                          setShowPhotoEditor(false);
+                        }}
+                      />
+                    )}
+                  </Col>
+                </Row>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
       </Container>
     </Fragment>
   );
 };
+
 export default UsersEditContain;
