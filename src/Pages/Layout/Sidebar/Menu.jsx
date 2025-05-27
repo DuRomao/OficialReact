@@ -34,12 +34,24 @@ export const MENUITEMS = async (forceRefresh = false) => {
     
     // Verificar se a resposta tem a estrutura esperada
     if (response.data && response.data.menu) {
-      // Transformar a estrutura do menu para o formato esperado pelo componente
-      const menuData = [{
-        menutitle: response.data.menu.menutitle || "General",
-        menucontent: response.data.menu.menucontent || "",
-        Items: response.data.menu.Items || []
-      }];
+      let menuData;
+      
+      // Verificar se menu é um array ou um objeto único
+      if (Array.isArray(response.data.menu)) {
+        // Se for um array, usar diretamente
+        menuData = response.data.menu.map(menuItem => ({
+          menutitle: menuItem.menutitle || "General",
+          menucontent: menuItem.menucontent || "",
+          Items: menuItem.Items || []
+        }));
+      } else {
+        // Se for um objeto único, transformar em array (compatibilidade com formato antigo)
+        menuData = [{
+          menutitle: response.data.menu.menutitle || "General",
+          menucontent: response.data.menu.menucontent || "",
+          Items: response.data.menu.Items || []
+        }];
+      }
 
       // Atualizar cache
       menuCache = menuData;
