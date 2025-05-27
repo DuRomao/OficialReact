@@ -1,0 +1,64 @@
+
+ERROR in ./src/Pages/Users/UsersEdit/UserPhotoEditor.jsx
+Module build failed (from ./node_modules/babel-loader/lib/index.js):
+SyntaxError: /home/runner/workspace/src/Pages/Users/UsersEdit/UserPhotoEditor.jsx: Unexpected token (215:22)
+
+  213 |           <Button 
+  214 |             color={activeTab === "crop" ? "primary" : "outline-primary"}
+> 215 |             onClick={()={() => setActiveTab("crop")}}
+      |                       ^
+  216 |           >
+  217 |             <i className="fa fa-crop me-1"></i>
+  218 |             Recortar
+    at constructor (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:360:19)
+    at FlowParserMixin.raise (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:6613:19)
+    at FlowParserMixin.unexpected (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:6633:16)
+    at FlowParserMixin.parseParenAndDistinguishExpression (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:11608:12)
+    at FlowParserMixin.parseParenAndDistinguishExpression (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:3597:18)
+    at FlowParserMixin.parseExprAtom (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:11242:23)
+    at FlowParserMixin.parseExprAtom (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4770:20)
+    at FlowParserMixin.parseExprSubscripts (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10992:23)
+    at FlowParserMixin.parseUpdate (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10977:21)
+    at FlowParserMixin.parseMaybeUnary (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10957:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10810:61)
+    at FlowParserMixin.parseExprOps (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10815:23)
+    at FlowParserMixin.parseMaybeConditional (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10792:23)
+    at FlowParserMixin.parseMaybeAssign (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10745:21)
+    at FlowParserMixin.parseMaybeAssign (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:3555:18)
+    at FlowParserMixin.parseExpressionBase (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10698:23)
+    at /home/runner/workspace/node_modules/@babel/parser/lib/index.js:10694:39
+    at FlowParserMixin.allowInAnd (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:12334:12)
+    at FlowParserMixin.parseExpression (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10694:17)
+    at FlowParserMixin.jsxParseExpressionContainer (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4638:31)
+    at FlowParserMixin.jsxParseAttributeValue (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4610:21)
+    at FlowParserMixin.jsxParseAttribute (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4659:38)
+    at FlowParserMixin.jsxParseOpeningElementAfterName (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4673:28)
+    at FlowParserMixin.jsxParseOpeningElementAfterName (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4074:18)
+    at FlowParserMixin.jsxParseOpeningElementAt (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4668:17)
+    at FlowParserMixin.jsxParseElementAt (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4692:33)
+    at FlowParserMixin.jsxParseElementAt (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4704:32)
+    at FlowParserMixin.jsxParseElementAt (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4704:32)
+    at FlowParserMixin.jsxParseElementAt (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4704:32)
+    at FlowParserMixin.jsxParseElement (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4755:17)
+    at FlowParserMixin.parseExprAtom (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4765:19)
+    at FlowParserMixin.parseExprSubscripts (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10992:23)
+    at FlowParserMixin.parseUpdate (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10977:21)
+    at FlowParserMixin.parseMaybeUnary (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10957:23)
+    at FlowParserMixin.parseMaybeUnaryOrPrivate (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10810:61)
+    at FlowParserMixin.parseExprOps (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10815:23)
+    at FlowParserMixin.parseMaybeConditional (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10792:23)
+    at FlowParserMixin.parseMaybeAssign (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10745:21)
+    at /home/runner/workspace/node_modules/@babel/parser/lib/index.js:3504:39
+    at FlowParserMixin.tryParse (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:6922:20)
+    at FlowParserMixin.parseMaybeAssign (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:3504:18)
+    at /home/runner/workspace/node_modules/@babel/parser/lib/index.js:10714:39
+    at FlowParserMixin.allowInAnd (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:12334:12)
+    at FlowParserMixin.parseMaybeAssignAllowIn (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10714:17)
+    at FlowParserMixin.parseParenAndDistinguishExpression (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:11591:28)
+    at FlowParserMixin.parseParenAndDistinguishExpression (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:3597:18)
+    at FlowParserMixin.parseExprAtom (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:11242:23)
+    at FlowParserMixin.parseExprAtom (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:4770:20)
+    at FlowParserMixin.parseExprSubscripts (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10992:23)
+    at FlowParserMixin.parseUpdate (/home/runner/workspace/node_modules/@babel/parser/lib/index.js:10977:21)
+
+webpack compiled with 1 error and 1 warning
